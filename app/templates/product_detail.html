@@ -1,0 +1,357 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta property="og:title" content="{{ product.name }} - Mahalaxmi Stationers" />
+  <meta property="og:description" content="Only ₹{{ product.selling_price }} | {{ product.brand.name }}" />
+  <meta property="og:image" content="{{ request.build_absolute_uri|cut:request.get_full_path }}{{ product.image.url }}" />
+  <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+  <meta property="og:type" content="product" />
+
+  <title>{{ product.name }} - Mahalaxmi Stationers</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f8f9fa;
+      background-image: url("{% static 'background.jpg' %}");
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    /* Navbar */
+    .navbar {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      color: white;
+      position: relative;
+      border-bottom: 1px solid #ddd;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .title {
+      font-size: 30px;
+      color: #333;
+      text-align: center;
+      flex-grow: 1;
+      font-weight: 1000;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.1);   
+      font-family: bonami;   
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+      word-spacing: 10px;
+      text-decoration: none; /* removes underline from link */
+      cursor: pointer;
+    }
+
+    .title:hover {
+      color:rgb(38, 39, 41); /* Change color on hover */
+    }
+
+    .menu-wrapper {
+      position: relative;
+    }
+
+    .hamburger {
+      color: black;
+      cursor: pointer;
+      padding: 8px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 25px;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background-color: #fff;
+      color: black;
+      min-width: 180px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      border-radius: 4px;
+      z-index: 999;
+    }
+
+    .dropdown-menu a {
+      display: block;
+      padding: 10px 16px;
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .dropdown-menu a:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Container */
+    .container {
+      max-width: 700px;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .back-button {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+      color: #007bff;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .back-button:hover {
+      text-decoration: underline;
+    }
+
+    .product-image {
+      width: 97%;
+      max-height: 300px;
+      object-fit: contain;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      background-color: #f0f0f0;
+      padding: 10px;
+    }
+
+    .product-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #222;
+    }
+
+    .product-brand {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 20px;
+    }
+
+    .price {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .mrp {
+      text-decoration: line-through;
+      color: #999;
+      margin-right: 10px;
+    }
+
+    .selling-price {
+      color: #d32f2f;
+      font-weight: bold;
+    }
+
+    .discount {
+      color: #388e3c;
+      margin-left: 8px;
+      font-size: 14px;
+    }
+
+    .description {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    .whatsapp-btn {
+      display: inline-block;
+      background-color: #25D366;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+      background-color: #1ebe5d;
+    }
+
+    .slider {
+      position: relative;
+      width: 80%;
+      max-width: 450px;
+      margin: 0 auto 20px;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .slides {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .slides img {
+      width: 100%;
+      flex-shrink: 0;
+      object-fit: contain;
+      padding: 10px;
+    }
+
+    .prev,
+    .next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 28px;
+      color: black;
+      border: none;
+      cursor: pointer;
+      z-index: 2;
+      border-radius: 90%;
+      background-color: white;
+    }
+
+    .prev:hover,
+    .next:hover {
+      background-color: white;
+    }
+
+    .prev {
+      left: 1px;
+    }
+
+    .next {
+      right: 1px;
+    }
+
+
+
+    @media (max-width: 600px) {
+      .container {
+        margin: 17px;
+        padding: 10px;
+      }
+
+      .title {
+        font-size: 18px;
+      }
+
+      .hamburger {
+        font-size: 18px;
+        padding: 6px 10px;
+      }
+
+      .product-name {
+        font-size: 20px;
+      }
+
+      .product-image {
+        width: 95%;
+
+      .price {
+        font-size: 16px;
+      }
+
+      .prev, .next {
+        font-size: 20px;
+        padding: 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="menu-wrapper">
+      <div class="hamburger" onclick="toggleDropdown()">☰</div>
+      <div id="dropdownMenu" class="dropdown-menu">
+        <a href="#">All Categories</a>
+        <a href="#">Books</a>
+        <a href="#">Pens</a>
+        <a href="#">Notebooks</a>
+        <a href="#">Office & School</a>
+      </div>
+    </div>
+    <a href="{% url 'dashboard' %}" class="title">Mahalaxmi Stationers</a>
+  </div>
+
+  <!-- Product Container -->
+  <div class="container">
+
+    <div class="slider">
+      <div class="slides">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% if product.image2 %}
+          <img src="{{ product.image2.url }}" alt="{{ product.name }} - 2">
+        {% endif %}
+      </div>
+      <button class="prev" onclick="changeSlide(-1)">❮</button>
+      <button class="next" onclick="changeSlide(1)">❯</button>
+    </div>
+
+
+    <div class="product-name">{{ product.name }}</div>
+    <div class="product-brand">Brand: {{ product.brand.name }}</div>
+
+    <div class="price">
+      {% if product.selling_price < product.mrp %}
+        <span class="mrp">₹{{ product.mrp }}</span>
+        <span class="selling-price">₹{{ product.selling_price }}</span>
+        <span class="discount">({{ product.discount_percentage }}% OFF)</span>
+      {% else %}
+        <span class="selling-price">₹{{ product.selling_price }}</span>
+      {% endif %}
+    </div>
+
+    <div class="description">{{ product.description }}</div>
+
+    <!-- WhatsApp Enquiry Button -->
+    <a href="https://wa.me/919460141606?text=Hi, I am interested in '{{ product.brand.name }} {{ product.name }}' priced at ₹{{ product.selling_price }}. Here is the link: {{ request.build_absolute_uri }}" 
+      target="_blank" class="whatsapp-btn">
+      📞 Enquire on WhatsApp
+    </a>
+
+  </div>
+
+  <script>
+    function toggleDropdown() {
+      const menu = document.getElementById("dropdownMenu");
+      menu.style.display = (menu.style.display === "block") ? "none" : "block";
+    }
+
+    window.onclick = function(e) {
+      if (!e.target.matches('.hamburger')) {
+        const dropdown = document.getElementById("dropdownMenu");
+        if (dropdown && dropdown.style.display === "block") {
+          dropdown.style.display = "none";
+        }
+      }
+    }
+  </script>
+  <script>
+    let currentIndex = 0;
+
+    function changeSlide(direction) {
+      const slider = document.querySelector(".slides");
+      const totalSlides = slider.children.length;
+      currentIndex = (currentIndex + direction + totalSlides) % totalSlides;
+      slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+    }
+  </script>
+
+</body>
+</html>
