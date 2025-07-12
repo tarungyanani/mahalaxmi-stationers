@@ -294,7 +294,7 @@
 
     <div class="slider">
       <div class="slides">
-        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        <img src="{% static product.image %}" alt="{{ product.name }}">
         {% if product.image2 %}
           <img src="{{ product.image2.url }}" alt="{{ product.name }} - 2">
         {% endif %}

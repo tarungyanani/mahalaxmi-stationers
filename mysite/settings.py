@@ -7,7 +7,7 @@ SECRET_KEY = 'django-insecure-)1896+qre@3-k&5qtjv1yscsu9dvqi_hlinoa#&s@!u9o*pow8
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['mahalaxmistationers-heaqbeb0erd8dsgx.centralindia-01.azurewebsites.net']
+ALLOWED_HOSTS = ['mahalaxmistationers-heaqbeb0erd8dsgx.centralindia-01.azurewebsites.net','127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -73,8 +73,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # ✅ Auto field

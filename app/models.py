@@ -6,7 +6,6 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
-
 class Product(models.Model):
     CATEGORY_CHOICES = [
         ('pen', 'Pens'),
@@ -14,7 +13,6 @@ class Product(models.Model):
         ('game', 'Games'),
         ('cool_Items', 'Cool Items'),
         ('color', 'Colors'),
-        # Add more categories as needed
     ]
 
     name = models.CharField(max_length=255)
@@ -22,8 +20,8 @@ class Product(models.Model):
     description = models.TextField()
     mrp = models.DecimalField(max_digits=10, decimal_places=2)
     selling_price = models.DecimalField(max_digits=10, decimal_places=2)
-    image = models.ImageField(upload_to='product_images/')
-    image2 = models.ImageField(upload_to='product_images/', null=True, blank=True)
+    image = models.CharField(max_length=255, help_text="e.g. product_images/abc.jpg")
+    image2 = models.CharField(max_length=255, null=True, blank=True)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, blank=True, null=True)
 
     def __str__(self):
