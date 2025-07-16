@@ -90,7 +90,6 @@ CSRF_TRUSTED_ORIGINS = [
 DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 
 AZURE_ACCOUNT_NAME = 'mahalaxmistorage'  # your storage account name
-# AZURE_ACCOUNT_KEY = 'V0PUpFWpZGi0WEiFnRHEjgK0q8SDQYOT8fYnXUxtc0ZdgcGF+rjwl9cq7MseyMyuAQHKjsiivEOI+AStSmZ23A=='
 AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
 AZURE_CONTAINER = 'product-images'  # name of your blob container (must already exist)
 
