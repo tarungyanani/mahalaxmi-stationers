@@ -6,7 +6,7 @@
 
   <meta property="og:title" content="{{ product.name }} - Mahalaxmi Stationers" />
   <meta property="og:description" content="Only ₹{{ product.selling_price }} | {{ product.brand.name }}" />
-  <meta property="og:image" content="{{ request.build_absolute_uri|cut:request.get_full_path }}{{ product.image.url }}" />
+  <meta property="og:image" content="{{ product.image }}" />
   <meta property="og:url" content="{{ request.build_absolute_uri }}" />
   <meta property="og:type" content="product" />
 
@@ -294,9 +294,9 @@
 
     <div class="slider">
       <div class="slides">
-        <img src="{% static product.image %}" alt="{{ product.name }}">
+        <img src="{{ product.image }}" alt="{{ product.name }}">
         {% if product.image2 %}
-          <img src="{{ product.image2.url }}" alt="{{ product.name }} - 2">
+          <img src="{{ product.image2 }}" alt="{{ product.name }} - 2">
         {% endif %}
       </div>
       <button class="prev" onclick="changeSlide(-1)">❮</button>

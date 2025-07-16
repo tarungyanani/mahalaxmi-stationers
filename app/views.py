@@ -17,7 +17,8 @@ def dashboard(request):
 
     # Then filter by brand (if selected)
     if selected_brand:
-        products = [p for p in products if p.brand.name == selected_brand]
+        products = [p for p in products if p.brand.name.lower() == selected_brand.lower()]
+
 
     # Then filter by search query (if entered)
     if query:
