@@ -17,6 +17,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -84,3 +85,14 @@ CSRF_TRUSTED_ORIGINS = [
     'https://mahalaxmistationers-heaqbeb0erd8dsgx.centralindia-01.azurewebsites.net',
     'https://mahalaxmistationers.com'
 ]
+
+# ✅ Azure Blob Storage for media files
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+
+AZURE_ACCOUNT_NAME = 'mahalaxmistorage'  # your storage account name
+# AZURE_ACCOUNT_KEY = 'V0PUpFWpZGi0WEiFnRHEjgK0q8SDQYOT8fYnXUxtc0ZdgcGF+rjwl9cq7MseyMyuAQHKjsiivEOI+AStSmZ23A=='
+AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
+AZURE_CONTAINER = 'product-images'  # name of your blob container (must already exist)
+
+AZURE_CUSTOM_DOMAIN = 'mahalaxmistorage.blob.core.windows.net'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER}/'
